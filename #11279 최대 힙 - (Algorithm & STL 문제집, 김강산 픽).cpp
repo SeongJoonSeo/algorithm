@@ -9,30 +9,32 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <queue>
 #include <string>
 
 using namespace std;
 
 int main() {
 	int n,input;
+	//1<=n<=100000
 	cin >> n;
-	vector<int> v;
-	make_heap(v.begin(), v.end());
+	priority_queue<int> v;
+	/*make_heap(v.begin(), v.end());*/
 	for (int i = 0; i < n; i++) {
-		cin >> input;
+		scanf("%d", &input);
 		if (input == 0)
 		{
 			if (v.empty())
 				printf("%d\n", 0);
 			else {
-				printf("%d\n", v.front());
-				pop_heap(v.begin(), v.end());
-				v.pop_back();
+				printf("%d\n", v.top());
+				/*pop_heap(v.begin(), v.end());*/
+				v.pop();
 			}
 		}
 		else {
-			v.push_back(input);
-			push_heap(v.begin(), v.end());
+			v.push(input);
+			/*push_heap(v.begin(), v.end());*/
 		}
 	}
 	return 0;
