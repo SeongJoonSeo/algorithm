@@ -23,9 +23,9 @@ int main() {
 		if (input == 0)
 		{
 			if (v.empty())
-				cout << 0 << endl;
+				printf("%d\n", 0);
 			else {
-				cout << v.front() << endl;
+				printf("%d\n", v.front());
 				pop_heap(v.begin(), v.end());
 				v.pop_back();
 			}
