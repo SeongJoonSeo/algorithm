@@ -1,0 +1,77 @@
+/*
+2016.8.17
+서성준
+알고리즘 연습문제 - Dynamic Programming
+#10164 격자상의 경로 - (Dynamic Programming 문제집, 최재원 픽)
+*/
+
+#include <iostream>
+
+using namespace std;
+
+long long dp[226] = { 0, };
+
+long long factorial(int n) {
+	return (n == 1 || n == 0) ? 1 : factorial(n - 1)*n;
+}
+long long calcu(int a, int b, int c) {
+	long long ret = 1;
+	int temp,temp2=1;
+	if (b >= c) {
+		temp = c;
+		for (int i = 0; i < b; i++) {
+			if (temp > 0) {
+				ret *= a--;
+				temp2 *= temp--;
+				if (ret%temp2 == 0) {
+					ret /= temp2;
+					temp2 = 1;
+				}
+			}
+			else
+				ret *= a--;
+		}
+	}
+	else {//b<c
+		temp = c;
+		for (int i = 0; i < c; i++) {
+			if (temp > 0) {
+				ret *= a--;
+				temp2 *= temp--;
+				if (ret%temp2 == 0) {
+					ret /= temp2;
+					temp2 = 1;
+				}
+			}
+			else
+				ret *= a--;
+		}
+	}
+	return ret;
+}
+
+long long solve(int n, int m, int k) {
+	long long& ret = dp[n*m];
+	if (ret != 0)
+		return ret;
+	if (k == 0)
+		return ret = calcu(n+m,n,m);
+	else {
+		if (k%m != 0)
+			return ret = solve(k / m, k%m -1, 0) * solve(n - k / m - 1, m - k%m, 0);		
+		else
+			return ret = solve(k / m - 1, 4, 0);
+	}
+}
+
+int main() {
+	int n, m, k;
+	cin >> n >> m >> k;
+	for (int i = 0; i < 16; i++) {
+		for (int j = 0; j < 16; j++) {
+			solve(i, j, 0);
+		}
+	}
+	cout << solve(n, m , k);
+	return 0;
+}
